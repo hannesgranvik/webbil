@@ -1,6 +1,6 @@
 <?php
 $host = '127.0.0.1';
-$db   = '2025_powerol';
+$db   = 'webbil';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
