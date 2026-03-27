@@ -1,13 +1,13 @@
 <?php
 
-function fetchannons($pdo){
+function fetchAnnons($pdo){
 $annonserlista = $pdo->query('
     SELECT * FROM annonser
     INNER JOIN bilar ON annonser.annons_id = bilar.bil_id
-    INNER JOIN försäljare ON annonser.annons_id = försäljare.forsaljar_id
-    INNER JOIN bransletyp on bransletyp.bransletyp_id = bilar.bransletyp
-    INNER JOIN karosstyp on karosstyp.karosstyp_id = bilar.karosstyp
-    INNER JOIN drift on drift.drift_id = bilar.drift
+    INNER JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
+    INNER JOIN bransletyp ON bransletyp.bransletyp_id = bilar.bransletyp
+    INNER JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
+    INNER JOIN drift ON drift.drift_id = bilar.drift
 ')->fetchAll();
 return $annonserlista;
 }
