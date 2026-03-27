@@ -1,5 +1,14 @@
 <?php
 
+$annonserlista = $pdo->query('
+    SELECT * FROM annonser
+    INNER JOIN bilar ON annonser.annons_id = bilar.bil_id
+    INNER JOIN försäljare ON annonser.annons_id = försäljare.forsaljar_id
+    INNER JOIN bransletyp on bransletyp.bransletyp_id = bilar.bransletyp
+    INNER JOIN karosstyp on karosstyp.karosstyp_id = bilar.karosstyp
+    INNER JOIN drift on drift.drift_id = bilar.drift
+')->fetchAll();
+
 function fetchProjects($pdo, $status){
 	$stmt = $pdo->prepare("
 	SELECT projekt.fel, projekt.bil_register_nmr, bilar.bil_marke, bilar.bil_modell 
