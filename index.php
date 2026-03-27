@@ -16,6 +16,8 @@ foreach($fetchannonser as $annons) :
   <img class="card-img-top" src="assets/ford1901something.jpg" alt="">
   <div class="card-body">
     <h5 class="card-title"><?php echo ($annons['marke']) . " " . ($annons['modell'])?></h5>
+    <p class="card-text"><?php echo $annons['pris']?>€</p>
+    <p class="card-text"><?php echo $annons['medkord']?> km </p>
     <p class="card-text"><?php echo $annons['beskrivning'] ?></p>
   </div>
 </div>
