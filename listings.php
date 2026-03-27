@@ -3,7 +3,7 @@ require_once "includes/config.php";
 require_once "includes/header.php";
 require_once "includes/functions.php";
 
-$annonserlista
+$annonserlista = renderads($pdo);
 ?>
 
 <div class="container py-5">
