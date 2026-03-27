@@ -26,8 +26,8 @@ if(isset($_GET['car-search-submit'])){
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <form method="GET" action="listings.php" class="d-flex">
+        <input class="form-control me-2" name="car-search" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit" name="car-search-submit">Search</button>
       </form>
     </div>

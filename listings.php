@@ -3,8 +3,9 @@ require_once "includes/config.php";
 require_once "includes/header.php";
 require_once "includes/functions.php";
 
-$annonserlista = renderads($pdo);
+$annonserlista = fetchAnnons($pdo);
 ?>
+
 
 <div class="container py-5">
     <h1 class="mb-4">annonser</h1>
