@@ -1,6 +1,6 @@
 <?php
 
-function fetchannons($pdo){
+function fetchAnnons($pdo){
 $annonserlista = $pdo->query('
     SELECT * FROM annonser
     INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
