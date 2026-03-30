@@ -8,7 +8,7 @@ $annonserlista = fetchAnnons($pdo);
 
 
 <div class="container py-5">
-    <h1 class="mb-4">Search results</h1>
+    <h1 class="mb-4">Sök resultat</h1>
     <div class="row g-3">
         <?php foreach ($annonserlista as $row): ?>
             <div class="col-md-4">
@@ -17,7 +17,6 @@ $annonserlista = fetchAnnons($pdo);
                     <h5 class="card-title"><?php echo $row['marke'] . " " . $row['modell'] . " " . $row['motortyp']; ?></h5>
                         <img class="card-img-top" src="img/<?php echo $row['bilder_url']; ?>">
                         <p class="card-text mb-1"><strong>Årsmodell:</strong> <?php echo $row['arsmodell']; ?> <strong>Medkörd:</strong> <?php echo $row['medkord']; ?> <strong>Drivkraft:</strong> <?php echo $row['drift_namn']; ?></p>
-                        <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
                         <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
                     </div>
                 </div>
