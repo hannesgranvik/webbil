@@ -18,6 +18,7 @@ $annonserlista = fetchAnnons($pdo);
                         <img class="card-img-top" src="img/<?php echo $row['bilder_url']; ?>">
                         <p class="card-text mb-1"><strong>Årsmodell:</strong> <?php echo $row['arsmodell']; ?> <strong>Medkörd:</strong> <?php echo $row['medkord']; ?> <strong>Drivkraft:</strong> <?php echo $row['drift_namn']; ?></p>
                         <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
+                        <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
                     </div>
                 </div>
             </div>
