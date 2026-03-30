@@ -2,10 +2,6 @@
 session_start();
 require_once "config.php";
 require_once "functions.php";
-
-if(isset($_GET['car-search-submit'])){
-  $carsMatches = searchCars($pdo, $_GET['car-search']);
-}
 ?>
 
 <!doctype html>
@@ -29,6 +25,25 @@ if(isset($_GET['car-search-submit'])){
       <form method="GET" action="listings.php" class="d-flex">
         <input class="form-control me-2" name="car-search" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit" name="car-search-submit">Search</button>
+        <label for="maxkm">Max km</label>
+        <input class="form-control me-2" name="filter-maxkm" id="maxkm" type="number">
+          <label for="maxpris">Max pris</label>
+        <input class="form-control me-2" name="filter-maxpris" id="maxpris" type="number">
+          <label for="minar">Min år</label>
+        <input class="form-control me-2" name="filter-minar" id="minar" type="number">
+          <label for="bransletyp">Välj bränsletyp</label>
+       <select name="bransletyp" id="bransletyp">
+        <option value="alla">Alla</option>
+        <option value="bensin">Bensin</option>
+        <option value="diesel">Diesel</option>
+        <option value="el">El</option>
+        <option value="hybrid-b">Hybrid, bensin</option>
+        <option value="hybri-d">Hybrid, diesel</option>
+      </select>
+          <label for="marke">Märke</label>
+        <input class="form-control me-2" name="filter-marke" id="marke" type="text">
+          <label for="modell">Modell</label>
+        <input class="form-control me-2" name="filter-modell" id="modell" type="text">
       </form>
     </div>
   </div>

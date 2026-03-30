@@ -11,7 +11,6 @@ $fetchannonser = fetchAnnons($pdo);
 foreach($fetchannonser as $annons) :
 ?>
 
-
 <div class="card" style="width: 18rem;">
   <img class="card-img-top" src="assets/ford1901something.jpg" alt="">
   <div class="card-body">
