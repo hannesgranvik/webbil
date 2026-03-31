@@ -3,7 +3,18 @@ require_once "includes/config.php";
 require_once "includes/header.php";
 require_once "includes/functions.php";
 
-$annonserlista = fetchAnnons($pdo);
+$filters = [
+    'maxkm' => $_GET['filter-maxkm'] ?? null,
+    'maxpris' => $_GET['filter-maxpris'] ?? null,
+    'minar' => $_GET['filter-minar'] ?? null,
+    'bransletyp' => $_GET['bransletyp'] ?? null,
+    'marke' => $_GET['filter-marke'] ?? null,
+    'modell' => $_GET['filter-modell'] ?? null
+];
+
+if(isset($_GET['car-search-submit'])){
+  $annonserlista = searchCars($pdo, $_GET['car-search'] ?? '', $filters);
+}
 ?>
 
 

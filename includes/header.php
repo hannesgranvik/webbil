@@ -2,10 +2,6 @@
 session_start();
 require_once "config.php";
 require_once "functions.php";
-
-if(isset($_GET['car-search-submit'])){
-  $carsMatches = searchCars($pdo, $_GET['car-search']);
-}
 ?>
 
 <!doctype html>
@@ -14,6 +10,7 @@ if(isset($_GET['car-search-submit'])){
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Webbil</title>
+  <link rel="stylesheet" href="styles/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link href="styles/style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
@@ -28,10 +25,6 @@ if(isset($_GET['car-search-submit'])){
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form method="GET" action="listings.php" class="d-flex">
-        <input class="form-control me-2" name="car-search" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit" name="car-search-submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>

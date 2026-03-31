@@ -12,13 +12,23 @@ $annonserlista = $pdo->query('
 return $annonserlista;
 }
 
-function searchCars($pdo, $searchParam){
-    $carSearchParam = $searchParam."%";
-	$carSearch = $pdo->prepare("SELECT * FROM bilar WHERE marke LIKE :search1 OR modell LIKE :search2");
-	$carSearch->bindValue(":search1", $carSearchParam, PDO::PARAM_STR);
-	$carSearch->bindValue(":search2", $carSearchParam, PDO::PARAM_STR);
-	$carSearch->execute();
-	return $carSearch->fetchAll();
+function searchCars($pdo, $searchParam, $filters = []) {
+
+    $query = "SELECT * FROM annonser
+        INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
+        INNER JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
+        INNER JOIN bransletyp ON bransletyp.bransletyp_id = bilar.bransletyp
+        INNER JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
+        INNER JOIN drift ON drift.drift_id = bilar.drift
+        WHERE 1=1";
+
+    $params = [];
+
+    // 🔍 Search input
+   if (!empty($searchParam)) {
+    $query .= " AND (bilar.marke LIKE :search1 OR bilar.modell LIKE :search2)";
+    $params[':search1'] = "%" . $searchParam . "%";
+    $params[':search2'] = "%" . $searchParam . "%";
 }
 
 function insertAd($forNamn, $efterNamn, $tel, $email, $foretag, $address, $ort, $postnummer, $marke, $modell, $arsmodell, $medkord, $farg, $bransletyp, $ar_utomat, $karosstyp, $vin_nummer, $motortyp, $hastkrafter, $antal_dorrar, $register_nmr, $drift, $bilder_url, $pris, $ar_aktiv, $beskrivning, $pdo) {
