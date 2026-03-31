@@ -13,57 +13,68 @@ return $annonserlista;
 }
 
 function searchCars($pdo, $searchParam, $filters = []) {
-    print_r($filters);
+
     $query = "SELECT * FROM annonser
-    INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
-    INNER JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
-    INNER JOIN bransletyp ON bransletyp.bransletyp_id = bilar.bransletyp
-    INNER JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
-    INNER JOIN drift ON drift.drift_id = bilar.drift
-    WHERE 1=1";
+        INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
+        INNER JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
+        INNER JOIN bransletyp ON bransletyp.bransletyp_id = bilar.bransletyp
+        INNER JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
+        INNER JOIN drift ON drift.drift_id = bilar.drift
+        WHERE 1=1";
 
     $params = [];
 
     // 🔍 Search input
-    if (!empty($searchParam)) {
-        $query .= " AND (marke LIKE :search OR modell LIKE :search)";
-        $params[':search'] = $searchParam . "%";
-    }
+   if (!empty($searchParam)) {
+    $query .= " AND (bilar.marke LIKE :search1 OR bilar.modell LIKE :search2)";
+    $params[':search1'] = "%" . $searchParam . "%";
+    $params[':search2'] = "%" . $searchParam . "%";
+}
 
     // 🚗 Filters
-    if (!empty($filters['maxkm'])) {
+
+    // Max KM
+    if (isset($filters['maxkm']) && $filters['maxkm'] !== '') {
         $query .= " AND bilar.medkord <= :maxkm";
-        $params[':maxkm'] = $filters['maxkm'];
+        $params[':maxkm'] = (int)$filters['maxkm'];
     }
 
-    if (!empty($filters['maxpris'])) {
+    // Max Price
+    if (isset($filters['maxpris']) && $filters['maxpris'] !== '') {
         $query .= " AND annonser.pris <= :maxpris";
-        $params[':maxpris'] = $filters['maxpris'];
+        $params[':maxpris'] = (int)$filters['maxpris'];
     }
 
-    if (!empty($filters['minar'])) {
-        $query .= " AND bilar.ar >= :minar";
-        $params[':minar'] = $filters['minar'];
+    // Min Year
+    if (isset($filters['minar']) && $filters['minar'] !== '') {
+        $query .= " AND bilar.arsmodell >= :minar";
+        $params[':minar'] = (int)$filters['minar'];
     }
 
+    // Fuel type
     if (!empty($filters['bransletyp']) && $filters['bransletyp'] !== 'alla') {
-        $query .= " AND bransletyp.bransletyp = :bransletyp";
+        $query .= " AND bransletyp.bransletyp_id = :bransletyp";
         $params[':bransletyp'] = $filters['bransletyp'];
     }
 
+    // Brand
     if (!empty($filters['marke'])) {
         $query .= " AND bilar.marke LIKE :marke";
         $params[':marke'] = $filters['marke'] . "%";
     }
 
+    // Model
     if (!empty($filters['modell'])) {
         $query .= " AND bilar.modell LIKE :modell";
         $params[':modell'] = $filters['modell'] . "%";
     }
 
     $stmt = $pdo->prepare($query);
-    
+
     $stmt->execute($params);
-print_r($stmt->fetchAll());
-    return $stmt->fetchAll();
+
+    // ✅ Fetch ONCE
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $results;
 }

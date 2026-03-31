@@ -12,10 +12,8 @@ $filters = [
     'modell' => $_GET['filter-modell'] ?? null
 ];
 
-$result = searchCars($pdo, $_GET['search'] ?? '', $filters);
-
 if(isset($_GET['car-search-submit'])){
-  $annonserlista = searchCars($pdo, $_GET['car-search']);
+  $annonserlista = searchCars($pdo, $_GET['car-search'] ?? '', $filters);
 }
 ?>
 
