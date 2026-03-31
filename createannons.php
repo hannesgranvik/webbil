@@ -13,21 +13,41 @@ $drift = $pdo->query('SELECT * FROM drift');
  <div class="card shadow-sm">
         <div class="card-body p-4">
 
-            <h5 class="card-title mb-3">Försäljare</h5>
+            
+        </div>
+    </div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      <div id="owner-form">
+        <h5 class="card-title mb-3">Försäljare</h5>
 
             <form action="#" method="post">
 
                 <div class="mb-3">
                     <label class="form-label">Förnamn</label>
-                    <input type="text" class="form-control" name="firstname" required>
+                    <input type="text" class="form-control" name="fornamn" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Efternamn</label>
-                    <input type="text" class="form-control" name="lastname" required>
+                    <input type="text" class="form-control" name="efternamn" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Telefon</label>
-                    <input type="tel" class="form-control" name="phone" required>
+                    <input type="tel" class="form-control" name="telefon" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">E-post</label>
@@ -52,12 +72,12 @@ $drift = $pdo->query('SELECT * FROM drift');
                     <label class="form-label">Postnummer</label>
                     <input type="text" class="form-control" name="postnummer" required>
                 </div>
-           
+                <button type="button" onclick="changeModalPage(1)">Nästa sida</button>
+</div>
 
-
+<div id="car-form">
 <h5 class="card-title mb-3">Bil</h5>
 
-            <form action="#" method="post">
 
                 <div class="mb-3">
                     <label class="form-label">Märke</label>
@@ -86,10 +106,6 @@ $drift = $pdo->query('SELECT * FROM drift');
                             <option value="<?php echo $a['bransletyp_id']; ?>"><?php echo $a['bransle_namn']; ?></option>
                         <?php endforeach; ?>
                     </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Pris</label>
-                    <input type="text" class="form-control" name="pris" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Växellåda</label>
@@ -138,15 +154,43 @@ $drift = $pdo->query('SELECT * FROM drift');
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <button type="button" onclick="changeModalPage(-1)">Föregående sida</button>
+                <button type="button" onclick="changeModalPage(1)">Nästa sida</button>
 
+                        </div>
 
-                <div class="d-grid mt-4">
-                    <button type="submit" name="annons-submit" class="btn btn-primary btn-lg">Skapa</button>
+<div id="ad-form">
+                <div class="mb-3">
+                    <label class="form-label">Pris</label>
+                    <input type="text" class="form-control" name="pris" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Beskrivning</label>
+                    <textarea type="text" class="form-control" name="beskrivning"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lägg på marknaden direkt</label>
+                    <select class="form-select" name="ar_aktiv" required>
+                            <option value="1">Jo</option>
+                            <option value="0">Nä</option>
+                    </select>
                 </div>
 
+                <div class="d-grid mt-4">
+                    <button type="button" onclick="changeModalPage(-1)">Föregående sida</button>
+                    <button type="submit" name="annons-submit" class="btn btn-primary btn-lg">Skapa</button>
+                </div>
+                        </div>
             </form>
-        </div>
+            
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng utan att spara</button>
+      </div>
     </div>
+  </div>
+</div>
+
 
 <?php
 require_once "includes/footer.php";
