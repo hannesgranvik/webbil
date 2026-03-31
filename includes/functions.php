@@ -69,6 +69,11 @@ function searchCars($pdo, $searchParam, $filters = []) {
         $params[':modell'] = $filters['modell'] . "%";
     }
 
+     if (array_key_exists('ar_foretag', $filters)) {
+        $query .= " AND försäljare.ar_foretag = :ar_foretag";
+        $params[':ar_foretag'] = $filters['ar_foretag'];
+    }
+
     $stmt = $pdo->prepare($query);
 
     $stmt->execute($params);
@@ -78,3 +83,4 @@ function searchCars($pdo, $searchParam, $filters = []) {
 
     return $results;
 }
+
