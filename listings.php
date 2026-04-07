@@ -19,7 +19,7 @@ if(isset($_GET['car-search-submit'])){
 
 
 <div class="container py-5">
-    <h1 class="mb-4">Search results</h1>
+    <h1 class="mb-4">Sök resultat</h1>
     <div class="row g-3">
         <?php foreach ($annonserlista as $row): ?>
             <div class="col-md-4">

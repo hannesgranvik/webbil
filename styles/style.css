@@ -1,27 +1,7 @@
-#filters {
-  display: flex;
-  justify-content: space-evenly;
-  padding: 20px;
+#ad-form {
+    display: none;
 }
 
-#search-bar {
-  justify-items: center;
-  padding: 10px 5px;
-}
-
-#search-submit {
-  color: #636e74;
-  border-color: #dee2e6;
-}
-
-#search-submit:hover {
-  background-color: lightskyblue;
-}
-
-.card-img-top {
-  padding: 20px;
-}
-
-.annons-header {
-  padding: 40px 0px 20px 0px;
+#car-form {
+    display: none;
 }
