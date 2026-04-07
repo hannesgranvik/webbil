@@ -58,16 +58,17 @@ $privateCars = searchCars($pdo, $_GET['car-search'] ?? '', ['ar_foretag' => 0]);
 foreach($companyCars as $annons) :
 ?>
 
- <div class="col-4">
-<div class="card">
+
+<div class="col-12 col-sm-6 col-md-6 col-lg-4">
+ <div class="card"><a href="singlecar.php?id=<?= $annons['annons_id']?>">
   <img class="card-img-top" src="assets/ford1901something.jpg" alt="">
   <div class="card-body">
     <h5 class="card-title"><?php echo ($annons['marke']) . " " . ($annons['modell'])?></h5>
     <p class="card-text"><?php echo $annons['pris']?>€</p>
     <p class="card-text"><?php echo $annons['medkord']?> km </p>
-    <p class="card-text"><?php echo $annons['beskrivning'] ?></p>
+    <p class="card-text"><?php echo substr($annons['beskrivning'], 0, 40) ?></p>
     </div>
-  </div>
+  </a></div>
  </div>
 
 <?php
@@ -85,16 +86,16 @@ foreach($companyCars as $annons) :
 foreach($privateCars as $annons) :
 ?>
 
- <div class="col-4">
-<div class="card">
+<div class="col-12 col-sm-6 col-md-4 col-lg-4">
+<div class="card"><a href="singlecar.php?id=<?= $annons['annons_id']?>">
   <img class="card-img-top" src="assets/ford1901something.jpg" alt="">
   <div class="card-body">
     <h5 class="card-title"><?php echo ($annons['marke']) . " " . ($annons['modell'])?></h5>
     <p class="card-text"><?php echo $annons['pris']?>€</p>
     <p class="card-text"><?php echo $annons['medkord']?> km </p>
-    <p class="card-text"><?php echo substr($annons['beskrivning'], 0, 45) ?></p>
+    <p class="card-text"><?php echo substr($annons['beskrivning'], 0, 40) ?></p>
     </div>
-  </div>
+</a></div>
  </div>
 <?php
 	endforeach;
