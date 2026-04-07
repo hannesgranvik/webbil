@@ -8,8 +8,6 @@ $privateCars = searchCars($pdo, $_GET['car-search'] ?? '', ['ar_foretag' => 0]);
 
 ?>
 
-<p>Hejdå</p>
-
 <div class="container" id="search-bar">
   <div class="row">
     <div class="col">
