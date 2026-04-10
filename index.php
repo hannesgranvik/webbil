@@ -20,22 +20,22 @@ $privateCars = searchCars($pdo, $_GET['car-search'] ?? '', ['ar_foretag' => 0]);
 
 <div class="container" id="filters">
   <div class="row">
-    <div class="col-2">
+    <div class="col-12 col-sm-6 col-md-2 col-lg-2">
         <input class="form-control me-2" name="filter-marke" id="marke" type="text" placeholder="Märke">
       </div>  
-      <div class="col-2">
+      <div class="col-12 col-sm-6 col-md-2 col-lg-2">
         <input class="form-control me-2" name="filter-modell" id="modell" type="text" placeholder="Modell">
       </div>
-    <div class="col-2">
+    <div class="col-12 col-sm-6 col-md-2 col-lg-2">
         <input class="form-control me-2" name="filter-maxkm" id="maxkm" type="number" placeholder="Max km">
       </div> 
-      <div class="col-2">
+      <div class="col-12 col-sm-6 col-md-2 col-lg-2">
         <input class="form-control me-2" name="filter-maxpris" id="maxpris" type="number" placeholder="Max Price">
       </div>  
-      <div class="col-2">
+      <div class="col-12 col-sm-6 col-md-2 col-lg-2">
         <input class="form-control me-2" name="filter-minar" id="minar" type="number" placeholder="Min år">
       </div>   
-      <div class="col-2">
+      <div class="col-12 col-sm-6 col-md-2 col-lg-2">
         <select name="bransletyp" id="bransletyp">
           <option value="0">Bränsletyp</option>
           <option value="1">Bensin</option>
