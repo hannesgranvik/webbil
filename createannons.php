@@ -12,7 +12,25 @@ $drift = $pdo->query('SELECT * FROM drift');
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['annons-submit'])) {
-    $result = insertAd(
+    
+    $target_dir = "uploads/";
+
+    $fileName = basename($_FILES["bilder_url"]["name"]); 
+    $target_file = $target_dir . $fileName;
+    $uploadOk = 1;
+
+    if (!empty($fileName)) {
+        if (move_uploaded_file($_FILES["bilder_url"]["tmp_name"], $target_file)) {
+            $image_to_save = $fileName;
+        } else {
+            echo "<div class='alert alert-danger'>Filen kunde inte sparas i mappen.</div>";
+            $image_to_save = "default.jpg"; 
+        }
+    } else {
+        $image_to_save = "default.jpg";
+    }
+
+$result = insertAd(
         $_POST['fornamn'], $_POST['efternamn'], $_POST['telefon'], 
         $_POST['email'], $_POST['ar_automat'], $_POST['address'], 
         $_POST['ort'], $_POST['postnummer'], $_POST['marke'], 
@@ -20,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['annons-submit'])) {
         $_POST['farg'], $_POST['bransletyp'], $_POST['ar_automat'], 
         $_POST['karosstyp'], $_POST['vin'], $_POST['motortyp'], 
         $_POST['hp'], $_POST['antal_dorrar'], $_POST['register_nmr'], 
-        $_POST['drift'], "image_url_here", $_POST['pris'], 
+        $_POST['drift'], $image_to_save, $_POST['pris'], 
         $_POST['ar_aktiv'], $_POST['beskrivning'], $pdo
     );
 
@@ -53,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['annons-submit'])) {
       </div>
       <div class="modal-body">
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
 
       <div id="owner-form">
         <h5 class="card-title mb-3">Försäljare</h5>

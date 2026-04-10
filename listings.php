@@ -26,7 +26,7 @@ if(isset($_GET['car-search-submit'])){
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
                     <h5 class="card-title"><?php echo $row['marke'] . " " . $row['modell'] . " " . $row['motortyp']; ?></h5>
-                        <img class="card-img-top" src="img/<?php echo $row['bilder_url']; ?>">
+                        <img class="card-img-top" src="uploads/<?php echo $row['bilder_url']; ?>" alt="Bilbild">
                         <p class="card-text mb-1"><strong>Årsmodell:</strong> <?php echo $row['arsmodell']; ?> <strong>Medkörd:</strong> <?php echo $row['medkord']; ?> <strong>Drivkraft:</strong> <?php echo $row['drift_namn']; ?></p>
                         <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
                     </div>
