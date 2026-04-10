@@ -10,6 +10,45 @@ $karosstyp = $pdo->query('SELECT * FROM karosstyp');
 $drift = $pdo->query('SELECT * FROM drift');
 ?>
 
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['annons-submit'])) {
+    
+    $target_dir = "uploads/";
+
+    $fileName = basename($_FILES["bilder_url"]["name"]); 
+    $target_file = $target_dir . $fileName;
+    $uploadOk = 1;
+
+    if (!empty($fileName)) {
+        if (move_uploaded_file($_FILES["bilder_url"]["tmp_name"], $target_file)) {
+            $image_to_save = $fileName;
+        } else {
+            echo "<div class='alert alert-danger'>Filen kunde inte sparas i mappen.</div>";
+            $image_to_save = "default.jpg"; 
+        }
+    } else {
+        $image_to_save = "default.jpg";
+    }
+
+$result = insertAd(
+        $_POST['fornamn'], $_POST['efternamn'], $_POST['telefon'], 
+        $_POST['email'], $_POST['ar_automat'], $_POST['address'], 
+        $_POST['ort'], $_POST['postnummer'], $_POST['marke'], 
+        $_POST['modell'], $_POST['arsmodell'], $_POST['medkord'], 
+        $_POST['farg'], $_POST['bransletyp'], $_POST['ar_automat'], 
+        $_POST['karosstyp'], $_POST['vin'], $_POST['motortyp'], 
+        $_POST['hp'], $_POST['antal_dorrar'], $_POST['register_nmr'], 
+        $_POST['drift'], $image_to_save, $_POST['pris'], 
+        $_POST['ar_aktiv'], $_POST['beskrivning'], $pdo
+    );
+
+    if ($result) {
+        echo "<div class='alert alert-success'>Annons skapad!</div>";
+    } else {
+        echo "<div class='alert alert-danger'>Något gick fel.</div>";
+    }
+}
+?>
  <div class="card shadow-sm">
         <div class="card-body p-4">
 
@@ -32,10 +71,10 @@ $drift = $pdo->query('SELECT * FROM drift');
       </div>
       <div class="modal-body">
 
+    <form action="" method="post" enctype="multipart/form-data">
+
       <div id="owner-form">
         <h5 class="card-title mb-3">Försäljare</h5>
-
-            <form action="#" method="post">
 
                 <div class="mb-3">
                     <label class="form-label">Förnamn</label>
@@ -55,7 +94,7 @@ $drift = $pdo->query('SELECT * FROM drift');
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Företag</label>
-                    <select class="form-select" name="ar_automat" required>
+                    <select class="form-select" name="ar_foretag" required>
                             <option value="0">Nej</option>
                             <option value="1">Jo</option>
                     </select>
@@ -89,11 +128,11 @@ $drift = $pdo->query('SELECT * FROM drift');
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Årsmodell</label>
-                    <input type="int" class="form-control" name="arsmodell" required>
+                    <input type="number" class="form-control" name="arsmodell" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Medkörd</label>
-                    <input type="text" class="form-control" name="medkord" required>
+                    <input type="number" class="form-control" name="medkord" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Färg</label>
@@ -123,10 +162,6 @@ $drift = $pdo->query('SELECT * FROM drift');
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Pris</label>
-                    <input type="text" class="form-control" name="pris" required>
-                </div>
-                <div class="mb-3">
                     <label class="form-label">Vin nummer</label>
                     <input type="text" class="form-control" name="vin">
                 </div>
@@ -136,11 +171,11 @@ $drift = $pdo->query('SELECT * FROM drift');
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Hästkrafter</label>
-                    <input type="text" class="form-control" name="hp">
+                    <input type="number" class="form-control" name="hp">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Antal dörrar</label>
-                    <input type="text" class="form-control" name="antal_dorrar" required>
+                    <input type="number" class="form-control" name="antal_dorrar" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Register nummer</label>
@@ -167,6 +202,10 @@ $drift = $pdo->query('SELECT * FROM drift');
                 <div class="mb-3">
                     <label class="form-label">Beskrivning</label>
                     <textarea type="text" class="form-control" name="beskrivning"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Bild</label>
+                    <input type="file" name="bilder_url" id="bild">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Lägg på marknaden direkt</label>
