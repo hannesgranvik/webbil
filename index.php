@@ -61,7 +61,7 @@ foreach($companyCars as $annons) :
 
 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
  <div class="card"><a href="singlecar.php?id=<?= $annons['annons_id']?>">
-  <img class="card-img-top" src="assets/ford1901something.jpg" alt="">
+   <img class="card-img-top" src="uploads/<?php echo $annons['bilder_url']; ?>" alt="Bilbild">
   <div class="card-body">
     <h5 class="card-title"><?php echo ($annons['marke']) . " " . ($annons['modell'])?></h5>
     <p class="card-text"><?php echo $annons['pris']?>€</p>
@@ -88,7 +88,7 @@ foreach($privateCars as $annons) :
 
 <div class="col-12 col-sm-6 col-md-4 col-lg-4">
 <div class="card"><a href="singlecar.php?id=<?= $annons['annons_id']?>">
-  <img class="card-img-top" src="assets/ford1901something.jpg" alt="">
+  <img class="card-img-top" src="uploads/<?php echo $annons['bilder_url']; ?>" alt="Bilbild">
   <div class="card-body">
     <h5 class="card-title"><?php echo ($annons['marke']) . " " . ($annons['modell'])?></h5>
     <p class="card-text"><?php echo $annons['pris']?>€</p>
