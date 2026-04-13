@@ -109,9 +109,9 @@ a {
 }
 
 #oc-filter-btn:hover {
-  color: #fff 
-  border-color: #fff 
-  background-color: #fff 
+  color: #fff ;
+  border-color: #fff ;
+  background-color: #fff;
   text-decoration: none;
 }
 

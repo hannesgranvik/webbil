@@ -71,28 +71,29 @@ if(isset($_GET['car-search-submit'])){
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Sök resultat</h1>
         
-        <label for="filter-toggle" class="btn btn-outline-success mb-0" id="filter-btn" style="cursor: pointer;">
-            <span class="">Filter</span><img id="filter-icon" src="img/filter-icon.png">
-        </label>
+       <label for="filter-toggle" class="btn btn-outline-secondary d-inline-flex align-items-center" id="filter-btn">
+    <span>Filter</span>
+    <img id="filter-icon" src="img/filter-icon.png" style="width: 18px; margin-left: 10px;">
+</label>
     </div>
-    
-    <div class="row g-3">
-        <?php foreach ($annonserlista as $row): ?>
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                    <h5 class="card-title"><?php echo $row['marke'] . " " . $row['modell'] . " " . $row['motortyp']; ?></h5>
-                        <img class="card-img-top" src="uploads/<?php echo $row['bilder_url']; ?>" alt="Bilbild">
-                        <p class="card-text mb-1"><strong>Årsmodell:</strong> <?php echo $row['arsmodell']; ?> <strong>Medkörd:</strong> <?php echo $row['medkord']; ?> <strong>Drivkraft:</strong> <?php echo $row['drift_namn']; ?></p>
-                        <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
+  </div> <?php if (!empty($annonserlista)): ?>
+        <div class="row g-3">
+            <?php foreach ($annonserlista as $row): ?>
+                <div class="col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo htmlspecialchars($row['marke'] . " " . $row['modell'] . " " . $row['motortyp']); ?></h5>
+                            <img class="card-img-top" src="uploads/<?php echo $row['bilder_url']; ?>" alt="Bilbild">
+                            <p class="card-text mb-1"><strong>Årsmodell:</strong> <?php echo $row['arsmodell']; ?> <strong>Medkörd:</strong> <?php echo $row['medkord']; ?> <strong>Drivkraft:</strong> <?php echo $row['drift_namn']; ?></p>
+                            <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
+                        </div>
                     </div>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p>Inga bilar hittades.</p>
-        <?php endif; ?>
-    </div>
-</div>
+                </div> <?php endforeach; ?>
+        </div> <?php else: ?>
+        <p class="mt-3">Inga bilar hittades.</p>
+    <?php endif; ?>
+</div> ```
+
 
 <?php
 require_once "includes/footer.php";

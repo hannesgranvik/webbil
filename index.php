@@ -36,13 +36,13 @@ $privateCars = searchCars($pdo, $_GET['car-search'] ?? '', ['ar_foretag' => 0]);
         <input class="form-control me-2" name="filter-minar" id="minar" type="number" placeholder="Min år">
       </div>   
       <div class="col-12 col-sm-6 col-md-2 col-lg-2">
-        <select name="bransletyp" id="bransletyp">
-          <option value="0">Bränsletyp</option>
-          <option value="1">Bensin</option>
-          <option value="2">Diesel</option>
-          <option value="3">El</option>
-          <option value="4">Hybrid, bensin</option>
-          <option value="5">Hybrid, diesel</option>
+        <select name="bransletyp" class="form-select">
+          <option selected disabled>Bränsletyp</option>
+          <option value="bensin">Bensin</option>
+          <option value="diesel">Diesel</option>
+          <option value="el">El</option>
+          <option value="el">Bensin Hybrid</option>
+          <option value="el">Diesel Hybrid</option>
         </select>
       </div>  
       </form>
