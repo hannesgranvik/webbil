@@ -28,6 +28,11 @@ if(isset($_GET['car-search-submit'])){
     </div>
     
     <div class="oc-filter-content">
+     <div class="mb-3">
+            <label class="form-label">Min Pris (€)</label>
+            <input type="number" name="filter-minpris" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 10000">
+        </div>    
+
         <div class="mb-3">
             <label class="form-label">Max Pris (€)</label>
             <input type="number" name="filter-maxpris" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 10000">
@@ -75,7 +80,7 @@ if(isset($_GET['car-search-submit'])){
             <span class="">Filter</span><img id="filter-icon" src="img/filter-icon.png">
         </label>
     </div>
-    
+    <?php if (!empty($annonserlista)): ?>
     <div class="row g-3">
         <?php foreach ($annonserlista as $row): ?>
             <div class="col-md-4">
@@ -87,6 +92,7 @@ if(isset($_GET['car-search-submit'])){
                         <p class="card-text mb-1"><strong>Pris:</strong> <?php echo $row['pris'] . "€"; ?></p>
                     </div>
                 </div>
+            </div>
             <?php endforeach; ?>
         <?php else: ?>
             <p>Inga bilar hittades.</p>
