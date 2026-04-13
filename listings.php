@@ -4,12 +4,22 @@ require_once "includes/header.php";
 require_once "includes/functions.php";
 
 $filters = [
-    'maxkm' => $_GET['filter-maxkm'] ?? null,
-    'maxpris' => $_GET['filter-maxpris'] ?? null,
-    'minar' => $_GET['filter-minar'] ?? null,
+    'maxkm' => $_GET['maxkm'] ?? null,
+    'minpris' => $_GET['minpris'] ?? null,
+    'maxpris' => $_GET['maxpris'] ?? null,
+     'marke' => $_GET['marke'] ?? null,
+    'modell' => $_GET['modell'] ?? null,
+    'minar' => $_GET['minar'] ?? null,
+    'maxar' => $_GET['maxar'] ?? null,
     'bransletyp' => $_GET['bransletyp'] ?? null,
-    'marke' => $_GET['filter-marke'] ?? null,
-    'modell' => $_GET['filter-modell'] ?? null
+    'ar_automat' => $_GET['ar_automat'] ?? null,
+    'karosstyp' => $_GET['karrosstyp'] ?? null,
+    'motortyp' => $_GET['motortyp'] ?? null,
+    'hastkrafter' => $_GET['hastkrafter'] ?? null,
+    'drift' => $_GET['drift'] ?? null,
+    'antal_dorrar' => $_GET['antal_dorrar'] ?? null,
+    'farg' => $_GET['farg'] ?? null,
+   
 ];
 
 if(isset($_GET['car-search-submit'])){
@@ -30,31 +40,128 @@ if(isset($_GET['car-search-submit'])){
     <div class="oc-filter-content">
      <div class="mb-3">
             <label class="form-label">Min Pris (€)</label>
-            <input type="number" name="filter-minpris" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 10000">
+            <input type="number" name="minpris" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 1000">
         </div>    
 
         <div class="mb-3">
             <label class="form-label">Max Pris (€)</label>
-            <input type="number" name="filter-maxpris" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 10000">
+            <input type="number" name="maxpris" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 10000">
         </div>
 
         <div class="mb-3">
             <label class="form-label">Max Medkörd (km)</label>
-            <input type="number" name="filter-maxkm" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 150000">
+            <input type="number" name="maxkm" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 150000">
+        </div>
+
+         <div class="mb-3">
+            <label class="form-label">Märke</label>
+            <select name="marke" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="">Alla märken</option>
+                <option value="BMW">BMW</option>
+                    <option value="Honda">Honda</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Volkswagen">Volkswagen</option>
+                </select>
+        </div>
+
+          <div class="mb-3">
+            <label class="form-label">Modell</label>
+            <input type="text" name="modell" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. Golf">
         </div>
         
-        <div class="mb-3">
-            <label class="form-label">Årsmodell (min)</label>
-            <input type="number" name="filter-minar" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 2010">
+         <div class="mb-3">
+            <label class="form-label">Bränsletyp</label>
+            <select name="bransletyp" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="0">Bränsletyp</option>
+                <option value="1">Bensin</option>
+                <option value="2">Diesel</option>
+                <option value="3">El</option>
+                <option value="4">Hybrid, bensin</option>
+                <option value="5">Hybrid, diesel</option>
+                </select>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Märke</label>
-            <select name="filter-marke" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
-                <option value="">Alla märken</option>
-                <option value="Honda">Honda</option>
-                <option value="Toyota">Toyota</option>
+            <label class="form-label">Årsmodell (min)</label>
+            <input type="number" name="minar" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 1930">
+        </div>
+
+         <div class="mb-3">
+            <label class="form-label">Årsmodell (max)</label>
+            <input type="number" name="maxar" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 2025">
+        </div>
+
+         <div class="mb-3">
+            <label class="form-label">Växellåda</label>
+            <select name="ar_automat" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="">Alla Växellådstyper</option>
+                <option value="0">Manual</option>
+                <option value="1">Automat</option>
                 </select>
+        </div>
+
+                <div class="mb-3">
+            <label class="form-label">Karosstyp</label>
+            <select name="karosstyp" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="">Alla Karosstyper</option>
+                <option value="0">Sedan</option>
+                <option value="1">Farmare</option>
+                <option value="2">Hatchback</option>
+                <option value="3">Coupe</option>
+                <option value="4">Convertible</option>
+                </select>
+            </div>
+
+                <div class="mb-3">
+            <label class="form-label">Motorvolym</label>
+            <input type="" name="motortyp" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 1.2l">
+        </div>
+
+          <div class="mb-3">
+            <label class="form-label">Hästkrafter</label>
+            <input type="number" name="hastkrafter" form="search-filter-form" class="form-control bg-white text-dark border-secondary" placeholder="T.ex. 200">
+        </div>
+
+         <div class="mb-3">
+            <label class="form-label">Drift</label>
+            <select name="drift" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="">Alla drifttyper</option>
+                <option value="0">FWD</option>
+                <option value="1">RWD</option>
+                <option value="2">AWD</option>
+                <option value="3">4WD</option>
+                </select>
+            </div>
+
+         <div class="mb-3">
+            <label class="form-label">Antal dörrar</label>
+            <select name="antal_dorrar" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="">Alla mängder dörrar</option>
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+            <label class="form-label">Färg</label>
+            <select name="farg" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
+                <option value="0">Alla färger</option>
+                <option value="1">Svart</option>
+                <option value="2">Vit</option>
+                <option value="3">Grå</option>
+                <option value="4">Röd</option>
+                <option value="5">Blå</option>
+                <option value="6">Grön</option>
+                <option value="7">Gul</option>
+                <option value="8">Orange</option>
+                <option value="9">Lila</option>
+                <option value="10">Rosa</option>
+                </select>
+            </div>
+
         </div>
 
         <button type="submit" name="car-search-submit" form="search-filter-form" class="btn w-100 mt-3" id="oc-filter-btn">Tillämpa filter</button>
