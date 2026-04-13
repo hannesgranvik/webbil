@@ -45,18 +45,27 @@ function searchCars($pdo, $searchParam, $filters = []) {
         $params[':maxpris'] = (int)$filters['maxpris'];
     }
 
+     if (isset($filters['minpris']) && $filters['minpris'] !== '') {
+        $query .= " AND annonser.pris >= :minpris";
+        $params[':minpris'] = (int)$filters['minpris'];
+    }
+
     // Min Year
     if (isset($filters['minar']) && $filters['minar'] !== '') {
         $query .= " AND bilar.arsmodell >= :minar";
         $params[':minar'] = (int)$filters['minar'];
     }
 
-    // Fuel type
-    if (!empty($filters['bransletyp']) && $filters['bransletyp'] !== 'alla') {
-        $query .= " AND bransletyp.bransletyp_id = :bransletyp";
-        $params[':bransletyp'] = $filters['bransletyp'];
+     if (isset($filters['maxar']) && $filters['maxar'] !== '') {
+        $query .= " AND bilar.arsmodell <= :maxar";
+        $params[':maxar'] = (int)$filters['maxar'];
     }
 
+    // Fuel type
+   if (!empty($filters['bransletyp']) && $filters['bransletyp'] != "0") {
+    $query .= " AND bilar.bransletyp = :bransletyp";
+    $params[':bransletyp'] = $filters['bransletyp'];
+}
     // Brand
     if (!empty($filters['marke'])) {
         $query .= " AND bilar.marke LIKE :marke";
@@ -73,6 +82,12 @@ function searchCars($pdo, $searchParam, $filters = []) {
         $query .= " AND försäljare.ar_foretag = :ar_foretag";
         $params[':ar_foretag'] = $filters['ar_foretag'];
     }
+
+     // Use strict inequality '!==' to ensure '0' is treated as a valid value
+if (isset($filters['ar_automat']) && $filters['ar_automat'] !== '') {
+    $query .= " AND bilar.ar_automat = :ar_automat";
+    $params[':ar_automat'] = (int)$filters['ar_automat']; // Cast to int for safety
+}
 
     $stmt = $pdo->prepare($query);
 
