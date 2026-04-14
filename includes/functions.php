@@ -12,13 +12,19 @@ $annonserlista = $pdo->query('
 return $annonserlista;
 }
 
-function searchCars($pdo, $searchParam, $filters = []) {
+$limit = 60;
+
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+
+$offset = ($page - 1) * $limit;
+
+function searchCars($pdo, $searchParam, $filters = [], $limit = 60, $offset = 0) {
 
     $query = "SELECT * FROM annonser
         INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
         INNER JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
         INNER JOIN bransletyp ON bransletyp.bransletyp_id = bilar.bransletyp
-        INNER JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
+        LEFT JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
         INNER JOIN drift ON drift.drift_id = bilar.drift
         WHERE 1=1";
 
@@ -66,7 +72,27 @@ function searchCars($pdo, $searchParam, $filters = []) {
     $query .= " AND bilar.bransletyp = :bransletyp";
     $params[':bransletyp'] = $filters['bransletyp'];
 }
-    // Brand
+
+if (!empty($filters['karosstyp']) && $filters['karosstyp'] != "0") {
+    $query .= " AND bilar.karosstyp = :karosstyp";
+    $params[':karosstyp'] = $filters['karosstyp'];
+}
+
+if (!empty($filters['drift']) && $filters['drift'] != "0") {
+    $query .= " AND bilar.drift = :drift";
+    $params[':drift'] = $filters['drift'];
+}
+
+if (!empty($filters['antal_dorrar']) && $filters['antal_dorrar'] != "0") {
+    $query .= " AND bilar.antal_dorrar = :antal_dorrar";
+    $params[':antal_dorrar'] = $filters['antal_dorrar'];
+}
+
+if (!empty($filters['farg']) && $filters['farg'] != "0") {
+    $query .= " AND bilar.farg = :farg";
+    $params[':farg'] = $filters['farg'];
+}
+
     if (!empty($filters['marke'])) {
         $query .= " AND bilar.marke LIKE :marke";
         $params[':marke'] = $filters['marke'] . "%";
@@ -78,6 +104,16 @@ function searchCars($pdo, $searchParam, $filters = []) {
         $params[':modell'] = $filters['modell'] . "%";
     }
 
+     if (isset($filters['motortyp']) && $filters['motortyp'] !== '') {
+    $query .= " AND bilar.motortyp >= :motortyp";
+    $params[':motortyp'] = (float)$filters['motortyp'];
+}
+
+ if (isset($filters['hastkrafter']) && $filters['hastkrafter'] !== '') {
+    $query .= " AND bilar.hastkrafter >= :hastkrafter";
+    $params[':hastkrafter'] = (float)$filters['hastkrafter'];
+}
+
      if (array_key_exists('ar_foretag', $filters)) {
         $query .= " AND försäljare.ar_foretag = :ar_foretag";
         $params[':ar_foretag'] = $filters['ar_foretag'];
@@ -88,6 +124,14 @@ if (isset($filters['ar_automat']) && $filters['ar_automat'] !== '') {
     $query .= " AND bilar.ar_automat = :ar_automat";
     $params[':ar_automat'] = (int)$filters['ar_automat']; // Cast to int for safety
 }
+
+$query .= " LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($query);
+
+    foreach ($params as $key => $val) {
+        $stmt->bindValue($key, $val);
+    }
 
     $stmt = $pdo->prepare($query);
 

@@ -3,6 +3,10 @@ require_once "includes/config.php";
 require_once "includes/header.php";
 require_once "includes/functions.php";
 
+$limit = 60;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
 $filters = [
     'maxkm' => $_GET['maxkm'] ?? null,
     'minpris' => $_GET['minpris'] ?? null,
@@ -13,7 +17,7 @@ $filters = [
     'maxar' => $_GET['maxar'] ?? null,
     'bransletyp' => $_GET['bransletyp'] ?? null,
     'ar_automat' => $_GET['ar_automat'] ?? null,
-    'karosstyp' => $_GET['karrosstyp'] ?? null,
+    'karosstyp' => $_GET['karosstyp'] ?? null,
     'motortyp' => $_GET['motortyp'] ?? null,
     'hastkrafter' => $_GET['hastkrafter'] ?? null,
     'drift' => $_GET['drift'] ?? null,
@@ -23,7 +27,7 @@ $filters = [
 ];
 
 if(isset($_GET['car-search-submit'])){
-  $annonserlista = searchCars($pdo, $_GET['car-search'] ?? '', $filters);
+  $annonserlista = searchCars($pdo, $_GET['car-search'] ?? '', $filters, $limit, $offset);
 }
 ?>
 
@@ -103,12 +107,12 @@ if(isset($_GET['car-search-submit'])){
                 <div class="mb-3">
             <label class="form-label">Karosstyp</label>
             <select name="karosstyp" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
-                <option value="">Alla Karosstyper</option>
-                <option value="0">Sedan</option>
-                <option value="1">Farmare</option>
-                <option value="2">Hatchback</option>
-                <option value="3">Coupe</option>
-                <option value="4">Convertible</option>
+                <option value="0">Alla Karosstyper</option>
+                <option value="1">Sedan</option>
+                <option value="2">Farmare</option>
+                <option value="3">Hatchback</option>
+                <option value="4">Coupe</option>
+                <option value="5">Convertible</option>
                 </select>
             </div>
 
@@ -125,23 +129,23 @@ if(isset($_GET['car-search-submit'])){
          <div class="mb-3">
             <label class="form-label">Drift</label>
             <select name="drift" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
-                <option value="">Alla drifttyper</option>
-                <option value="0">FWD</option>
-                <option value="1">RWD</option>
-                <option value="2">AWD</option>
-                <option value="3">4WD</option>
+                <option value="0">Alla drifttyper</option>
+                <option value="1">FWD</option>
+                <option value="2">RWD</option>
+                <option value="3">AWD</option>
+                <option value="4">4WD</option>
                 </select>
             </div>
 
          <div class="mb-3">
             <label class="form-label">Antal dörrar</label>
             <select name="antal_dorrar" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
-                <option value="">Alla mängder dörrar</option>
-                <option value="0">1</option>
-                <option value="1">2</option>
-                <option value="2">3</option>
-                <option value="3">4</option>
-                <option value="4">5</option>
+                <option value="0">Alla mängder dörrar</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
                 </select>
             </div>
 
@@ -149,16 +153,16 @@ if(isset($_GET['car-search-submit'])){
             <label class="form-label">Färg</label>
             <select name="farg" form="search-filter-form" class="form-select bg-white text-dark border-secondary">
                 <option value="0">Alla färger</option>
-                <option value="1">Svart</option>
-                <option value="2">Vit</option>
-                <option value="3">Grå</option>
-                <option value="4">Röd</option>
-                <option value="5">Blå</option>
-                <option value="6">Grön</option>
-                <option value="7">Gul</option>
-                <option value="8">Orange</option>
-                <option value="9">Lila</option>
-                <option value="10">Rosa</option>
+                <option value="Svart">Svart</option>
+                <option value="Vit">Vit</option>
+                <option value="Grå">Grå</option>
+                <option value="Röd">Röd</option>
+                <option value="Blå">Blå</option>
+                <option value="Grön">Grön</option>
+                <option value="Gul">Gul</option>
+                <option value="Orange">Orange</option>
+                <option value="Lila">Lila</option>
+                <option value="Rosa">Rosa</option>
                 </select>
             </div>
 
