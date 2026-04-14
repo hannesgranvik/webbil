@@ -127,7 +127,7 @@ $result = insertAd(
                     <label class="form-label">Postnummer</label>
                     <input type="text" class="form-control" name="postnummer" required>
                 </div>
-                <button type="button" onclick="changeModalPage(1)">Nästa sida</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="changeModalPage(1)">Nästa sida</button>
 </div>
 
 <div id="car-form">
@@ -205,8 +205,8 @@ $result = insertAd(
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <button type="button" onclick="changeModalPage(-1)">Föregående sida</button>
-                <button type="button" onclick="changeModalPage(1)">Nästa sida</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="changeModalPage(-1)">Föregående sida</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="changeModalPage(1)">Nästa sida</button>
 
                         </div>
 
@@ -231,13 +231,13 @@ $result = insertAd(
                     </select>
                 </div>
 
-                <div class="d-grid mt-4">
-                    <button type="button" onclick="changeModalPage(-1)">Föregående sida</button>
+                <div class="d-grid gap-3 mt-4">
+                    <button type="button" class="btn btn-outline-secondary" onclick="changeModalPage(-1)">Föregående sida</button>
                     <button type="submit" name="annons-submit" class="btn btn-primary btn-lg">Skapa</button>
                 </div>
                         </div>
             </form>
-            
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng utan att spara</button>
@@ -246,3 +246,4 @@ $result = insertAd(
   </div>
 </div>
 </nav>
+

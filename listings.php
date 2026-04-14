@@ -187,9 +187,10 @@ if(isset($_GET['car-search-submit'])){
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0">Sök resultat</h1>
         
-        <label for="filter-toggle" class="btn btn-outline-success mb-0" id="filter-btn" style="cursor: pointer;">
-            <span class="">Filter</span><img id="filter-icon" src="img/filter-icon.png">
-        </label>
+       <label for="filter-toggle" class="btn btn-outline-secondary d-inline-flex align-items-center" id="filter-btn">
+    <span>Filter</span>
+    <img id="filter-icon" src="img/filter-icon.png" style="width: 18px; margin-left: 10px;">
+</label>
     </div>
     <?php if (!empty($annonserlista)): ?>
     <div class="row g-3">
