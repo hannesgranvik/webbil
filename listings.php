@@ -3,10 +3,6 @@ require_once "includes/config.php";
 require_once "includes/header.php";
 require_once "includes/functions.php";
 
-$limit = 60;
-$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $limit;
-
 $filters = [
     'maxkm' => $_GET['maxkm'] ?? null,
     'minpris' => $_GET['minpris'] ?? null,
@@ -27,7 +23,7 @@ $filters = [
 ];
 
 if(isset($_GET['car-search-submit'])){
-  $annonserlista = searchCars($pdo, $_GET['car-search'] ?? '', $filters, $limit, $offset);
+  $annonserlista = searchCars($pdo, $_GET['car-search'] ?? '', $filters);
 }
 ?>
 
