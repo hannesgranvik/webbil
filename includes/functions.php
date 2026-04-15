@@ -212,4 +212,14 @@ function searchSellers($pdo, $searchParam){
 	$sellerSearch->execute();
 
 	return $sellerSearch->fetchAll();
+function getCarById($pdo, $id) {
+    $stmt = $pdo->prepare("SELECT * FROM annonser
+        INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
+        INNER JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
+        INNER JOIN bransletyp ON bransletyp.bransletyp_id = bilar.bransletyp
+        INNER JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
+        INNER JOIN drift ON drift.drift_id = bilar.drift
+        WHERE annonser.annons_id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
