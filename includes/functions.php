@@ -12,13 +12,7 @@ $annonserlista = $pdo->query('
 return $annonserlista;
 }
 
-$limit = 60;
-
-$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
-
-$offset = ($page - 1) * $limit;
-
-function searchCars($pdo, $searchParam, $filters = [], $limit = 60, $offset = 0) {
+function searchCars($pdo, $searchParam, $filters = []) {
 
     $query = "SELECT * FROM annonser
         INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
@@ -27,7 +21,6 @@ function searchCars($pdo, $searchParam, $filters = [], $limit = 60, $offset = 0)
         LEFT JOIN karosstyp ON karosstyp.karosstyp_id = bilar.karosstyp
         INNER JOIN drift ON drift.drift_id = bilar.drift
         WHERE 1=1";
-
     $params = [];
 
     // 🔍 Search input
@@ -125,23 +118,26 @@ if (isset($filters['ar_automat']) && $filters['ar_automat'] !== '') {
     $params[':ar_automat'] = (int)$filters['ar_automat']; // Cast to int for safety
 }
 
-$query .= " LIMIT :limit OFFSET :offset";
+$stmt = $pdo->prepare($query);
 
-    $stmt = $pdo->prepare($query);
-
-    foreach ($params as $key => $val) {
-        $stmt->bindValue($key, $val);
-    }
-
-    $stmt = $pdo->prepare($query);
-
-    $stmt->execute($params);
-
-    // ✅ Fetch ONCE
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $results;
+// bind filters
+foreach ($params as $key => $val) {
+    $stmt->bindValue($key, $val);
 }
+
+$stmt->execute();
+
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+return $results;
+// how many pages? (temporary hardcode)
+$totalPages = 5; // we’ll fix this properly later
+
+
+}
+
+
+
 
 
 function insertAd($forNamn, $efterNamn, $tel, $email, $foretag, $address, $ort, $postnummer, $marke, $modell, $arsmodell, $medkord, $farg, $bransletyp, $ar_automat, $karosstyp, $vin_nummer, $motortyp, $hastkrafter, $antal_dorrar, $register_nmr, $drift, $bilder_url, $pris, $ar_aktiv, $beskrivning, $pdo) {
@@ -207,6 +203,15 @@ echo $e->getMessage();
     }
 }
 
+function searchSellers($pdo, $searchParam){
+    $sql = "SELECT * FROM försäljare WHERE namn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3"
+	$sellerSearch = $pdo->prepare($sql);
+	$sellerSearch->bindValue(":search1", $searchParam, PDO::PARAM_STR);
+	$sellerSearch->bindValue(":search2", $searchParam, PDO::PARAM_STR);
+	$sellerSearch->bindValue(":search2", $searchParam, PDO::PARAM_STR);
+	$sellerSearch->execute();
+
+	return $sellerSearch->fetchAll();
 function getCarById($pdo, $id) {
     $stmt = $pdo->prepare("SELECT * FROM annonser
         INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
