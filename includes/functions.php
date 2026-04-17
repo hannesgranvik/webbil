@@ -202,7 +202,7 @@ echo $e->getMessage();
         return false;
     }
 }
-
+/*
 function searchSellers($pdo, $searchParam){
     $sql = "SELECT * FROM försäljare WHERE namn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3"
 	$sellerSearch = $pdo->prepare($sql);
@@ -212,6 +212,7 @@ function searchSellers($pdo, $searchParam){
 	$sellerSearch->execute();
 
 	return $sellerSearch->fetchAll();
+     */
 function getCarById($pdo, $id) {
     $stmt = $pdo->prepare("SELECT * FROM annonser
         INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
