@@ -204,15 +204,82 @@ echo $e->getMessage();
 }
 /*
 function searchSellers($pdo, $searchParam){
-    $sql = "SELECT * FROM försäljare WHERE namn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3"
+    $sql = "SELECT * FROM försäljare WHERE fornamn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3";
 	$sellerSearch = $pdo->prepare($sql);
 	$sellerSearch->bindValue(":search1", $searchParam, PDO::PARAM_STR);
 	$sellerSearch->bindValue(":search2", $searchParam, PDO::PARAM_STR);
-	$sellerSearch->bindValue(":search2", $searchParam, PDO::PARAM_STR);
+	$sellerSearch->bindValue(":search3", $searchParam, PDO::PARAM_STR);
 	$sellerSearch->execute();
 
 	return $sellerSearch->fetchAll();
-     */
+}
+
+if (isset($_POST['submit_edit'])) {
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $id = $_POST['id'];
+    $fornamn = $_POST['fornamn'];
+    $efternamn = $_POST['efternamn'];
+    $email = $_POST['email'];
+    $telefon = $_POST['telefon'];
+    $adress = $_POST['adress'];
+    $postnummer = $_POST['postnummer'];
+    $ort = $_POST['ort'];
+
+    try {
+
+        $sql = "UPDATE `försäljare` SET 
+                fornamn = :fornamn, 
+                efternamn = :efternamn, 
+                `e-post` = :email, 
+                telefon = :telefon, 
+                adress = :adress, 
+                postnummer = :postnummer, 
+                ort = :ort 
+                WHERE forsaljar_id = :id";
+
+        $stmt = $pdo->prepare($sql);
+        
+        $stmt->execute([
+            ':fornamn'    => $fornamn,
+            ':efternamn'   => $efternamn,
+            ':email'       => $email,
+            ':telefon'     => $telefon,
+            ':adress'      => $adress,
+            ':postnummer'  => $postnummer,
+            ':ort'         => $ort,
+            ':id'          => $id
+        ]);
+
+        header("Location: sellersoverview.php?success=1");
+        exit();
+
+    } catch (PDOException $e) {
+        die("Database Error: " . $e->getMessage());
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_delete'])) {
+    global $pdo; 
+
+    if (!$pdo) {
+        die("Database error: The variable \$pdo is null. Check your database include file.");
+    }
+
+    $idToDelete = $_POST['delete_id'];
+
+    try {
+        $stmt = $pdo->prepare("DELETE FROM försäljare WHERE forsaljar_id = :id");
+        $stmt->bindParam(':id', $idToDelete, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            header("Location: " . $_SERVER['PHP_SELF']); 
+            exit;
+        }
+    } catch (PDOException $e) {
+        echo "<div class='alert alert-danger'>Database Error: " . $e->getMessage() . "</div>";
+    }
 function getCarById($pdo, $id) {
     $stmt = $pdo->prepare("SELECT * FROM annonser
         INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
