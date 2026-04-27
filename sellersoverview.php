@@ -12,6 +12,20 @@ else {
   $sellerSearch = $pdo->query("SELECT * FROM försäljare")->fetchAll();
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submitSeller_delete'])) {
+    if (deleteSeller($pdo, $_POST['delete_id'])) {
+        header("Location: " . $_SERVER['PHP_SELF'] . "?success=deleted"); 
+        exit;
+    }
+}
+
+if (isset($_POST['submitSeller_edit'])) {
+    if (updateSeller($pdo, $_POST)) {
+        header("Location: " . $_SERVER['PHP_SELF'] . "?success=updated");
+        exit();
+    }
+}
+
 ?>
 
 <div class="container pt-5" id="search-bar">
@@ -115,7 +129,7 @@ else {
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
-                    <button type="submit" name="submit_edit" class="btn btn-primary">Spara ändringar</button>
+                    <button type="submit" name="submitSeller_edit" class="btn btn-primary">Spara ändringar</button>
                 </div>
             </form>
         </div>
@@ -124,7 +138,7 @@ else {
 
     <form method="POST" class="m-0" onsubmit="return confirm('Är du säker på att du vill radera denna säljare?');">
         <input type="hidden" name="delete_id" value="<?php echo $seller['forsaljar_id']; ?>">
-        <button type="submit" name="submit_delete" class="btn btn-outline-danger btn-sm">
+        <button type="submit" name="submitSeller_delete" class="btn btn-outline-danger btn-sm">
             Radera
         </button>
     </form>
