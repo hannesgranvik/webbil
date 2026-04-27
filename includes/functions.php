@@ -202,7 +202,7 @@ echo $e->getMessage();
         return false;
     }
 }
-/*
+
 function searchSellers($pdo, $searchParam){
     $sql = "SELECT * FROM försäljare WHERE fornamn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3";
 	$sellerSearch = $pdo->prepare($sql);
@@ -260,6 +260,7 @@ if (isset($_POST['submit_edit'])) {
     }
 }
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_delete'])) {
     global $pdo; 
 
@@ -280,6 +281,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_delete'])) {
     } catch (PDOException $e) {
         echo "<div class='alert alert-danger'>Database Error: " . $e->getMessage() . "</div>";
     }
+}
+
+
 function getCarById($pdo, $id) {
     $stmt = $pdo->prepare("SELECT * FROM annonser
         INNER JOIN bilar ON annonser.bil_id = bilar.bil_id
