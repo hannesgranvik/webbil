@@ -202,7 +202,7 @@ echo $e->getMessage();
         return false;
     }
 }
-
+/*
 function searchSellers($pdo, $searchParam){
     $sql = "SELECT * FROM försäljare WHERE fornamn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3";
 	$sellerSearch = $pdo->prepare($sql);

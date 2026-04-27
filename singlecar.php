@@ -24,18 +24,67 @@ if (!$car) {
 
 <div class="container">
     <div class="row justify-content-center py-3">
-        <div class="col-12 col-md-5">
-            <img src="uploads/<?= ($car['bilder_url']) ?>" 
-                 alt="Bilbild" class="img-fluid">
+        <div class="col-12 col-lg-8"> <img src="uploads/<?= ($car['bilder_url']) ?>" 
+                 alt="Bilbild" class="img-fluid rounded shadow-sm">
         </div>
-</div>
-<div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <h1 class="text-center"><?= ($car['marke']) . " " . ($car['modell']) ?><span style="margin-left: 6rem;"> <?= ($car['pris']) ?>€</span></h1>
-            <p><strong>Årsmodell:</strong> <?= ($car['arsmodell']) ?> <span style="margin-left: 1rem;"> <strong>Körsträcka:</strong> <?= ($car['medkord']) ?> km </span> <span style="margin-left: 1rem;"> <strong>Bränsle:</strong> <?= ($car['bransle_namn']) ?> </span>  <span style="margin-left: 1rem;"> <strong>Växellåda:</strong> <?php if ($car['ar_automat'] === 0){echo "Manual";} else {echo "Automat";}?> </span> </p>
-            <p><strong>Motortyp:</strong> <?= ($car['motortyp']) ?> <span style="margin-left: 1rem;"> <strong>Drift:</strong> <?= ($car['drift_namn']) ?> </span> <span style="margin-left: 1rem;"> <strong>Bränsle:</strong> <?= ($car['bransle_namn']) ?> </span>  <span style="margin-left: 1rem;"> <strong>Växellåda:</strong> <?php if ($car['ar_automat'] === 0){echo "Manual";} else {echo "Automat";}?> </span> </p>
-            
-            <p><strong>Beskrivning:</strong> <?= ($car['beskrivning']) ?></p>
+    </div>
+
+    <div class="row justify-content-center px-2">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+                <h1 class="display-5 fw-bold mb-2 mb-md-0"><?= ($car['marke'] . " " . $car['modell']) ?></h1>
+                <h1><?= ($car['pris']) ?>€</h1>
+            </div>
+
+            <div class="row border-bottom pb-2 mb-4 g-3">
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Årsmodell</small>
+                    <strong><?= $car['arsmodell'] ?></strong>
+                </div>
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Körsträcka</small>
+                    <strong><?= $car['medkord'] ?> km</strong>
+                </div>
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Bränsle</small>
+                    <strong><?= $car['bransle_namn'] ?></strong>
+                </div>
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Växellåda</small>
+                    <strong><?= $car['ar_automat'] === 0 ? "Manuell" : "Automat" ?></strong>
+                </div>
+            </div>
+
+            <div class="row border-bottom pb-2 mb-4 g-3">
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Motortyp</small>
+                    <strong><?= $car['motortyp'] ?></strong>
+                </div>
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Drift</small>
+                    <strong><?= $car['drift_namn'] ?></strong>
+                </div>
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Kaross</small>
+                    <strong><?= $car['kaross_namn'] ?></strong>
+                </div>
+                <div class="col-6 col-md-3">
+                    <small class="text-muted d-block">Reg nr</small>
+                    <strong><?= $car['register_nmr'] ?></strong>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="fw-bold">Beskrivning</h5>
+                <div class="p-3 bg-light rounded border">
+                    <?= nl2br(($car['beskrivning'])) ?>
+                </div>
+            </div>
+
+            <div class="pt-3 border-top">
+                <p class="text-muted mb-0">Säljare:</p>
+                <span class="fs-4 fw-bold"><?= ($car['fornamn'] . " " . $car['efternamn']) ?></span>
+            </div>
         </div>
     </div>
 </div>
