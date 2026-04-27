@@ -81,10 +81,14 @@ if (!$car) {
                 </div>
             </div>
 
-            <div class="pt-3 border-top">
-                <p class="text-muted mb-0">Säljare:</p>
-                <span class="fs-4 fw-bold"><?= ($car['fornamn'] . " " . $car['efternamn']) ?></span>
+        <div class="pt-3 border-top d-flex align-items-center">
+            <div>
+            <p class="text-muted mb-0">Säljare:</p>
+            <span class="fs-4 fw-bold"><?= ($car['fornamn'] . " " . $car['efternamn']) ?></span>
             </div>
+    
+                <button class="btn btn-primary ms-auto">Ta kontakt</button>
+        </div>
         </div>
     </div>
 </div>
