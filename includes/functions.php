@@ -202,7 +202,7 @@ echo $e->getMessage();
         return false;
     }
 }
-/*
+
 function searchSellers($pdo, $searchParam){
     $sql = "SELECT * FROM försäljare WHERE fornamn LIKE :search1 OR efternamn LIKE :search2 OR adress LIKE :search3";
 	$sellerSearch = $pdo->prepare($sql);
@@ -293,6 +293,49 @@ function updateCar($pdo, $data) {
 function deleteCar($pdo, $id) {
     $stmt = $pdo->prepare("DELETE FROM bilar WHERE bil_id = :id");
     return $stmt->execute([':id' => $id]);
+}
+
+function searchListing($pdo, $searchParam){
+    $sql = "SELECT * FROM annonser  JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
+    WHERE publiceringsdatum LIKE :search1 OR forsaljar_id LIKE :search2";
+	$listingSearch = $pdo->prepare($sql);
+	$listingSearch->bindValue(":search1", "%$searchParam%", PDO::PARAM_STR);
+	$listingSearch->bindValue(":search2", "%$searchParam%", PDO::PARAM_STR);
+	$listingSearch->execute();
+
+	return $listingSearch->fetchAll();
+}
+
+function updateListing($pdo, $data) {
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $sql = "UPDATE `annonser` SET 
+                pris = :pris, 
+                beskrivning = :beskrivning, 
+                ar_aktiv = :ar_aktiv
+                WHERE annons_id = :id";
+
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute([
+            ':pris'    => $data['pris'],
+            ':beskrivning'  => $data['beskrivning'],
+            ':ar_aktiv'     => $data['ar_aktiv'],
+            ':id'         => $data['id']
+        ]);
+    } catch (PDOException $e) {
+        die("Database Error: " . $e->getMessage());
+    }
+}
+
+function deleteListing($pdo, $id) {
+    try {
+        $stmt = $pdo->prepare("DELETE FROM annonser WHERE annons_id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        echo "<div class='alert alert-danger'>Database Error: " . $e->getMessage() . "</div>";
+        return false;
+    }
 }
 
 function getCarById($pdo, $id) {
