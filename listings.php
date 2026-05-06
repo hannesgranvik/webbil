@@ -1,5 +1,6 @@
 <?php
 require_once "includes/config.php";
+$hideHamburger = true;
 require_once "includes/header.php";
 require_once "includes/functions.php";
 
@@ -7,7 +8,7 @@ $filters = [
     'maxkm' => $_GET['maxkm'] ?? null,
     'minpris' => $_GET['minpris'] ?? null,
     'maxpris' => $_GET['maxpris'] ?? null,
-     'marke' => $_GET['marke'] ?? null,
+    'marke' => $_GET['marke'] ?? null,
     'modell' => $_GET['modell'] ?? null,
     'minar' => $_GET['minar'] ?? null,
     'maxar' => $_GET['maxar'] ?? null,

@@ -136,10 +136,6 @@ $totalPages = 5; // we’ll fix this properly later
 
 }
 
-
-
-
-
 function insertAd($forNamn, $efterNamn, $tel, $email, $foretag, $address, $ort, $postnummer, $marke, $modell, $arsmodell, $medkord, $farg, $bransletyp, $ar_automat, $karosstyp, $vin_nummer, $motortyp, $hastkrafter, $antal_dorrar, $register_nmr, $drift, $bilder_url, $pris, $ar_aktiv, $beskrivning, $pdo) {
 
     try {
@@ -214,21 +210,9 @@ function searchSellers($pdo, $searchParam){
 	return $sellerSearch->fetchAll();
 }
 
-if (isset($_POST['submit_edit'])) {
-
+function updateSeller($pdo, $data) {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $id = $_POST['id'];
-    $fornamn = $_POST['fornamn'];
-    $efternamn = $_POST['efternamn'];
-    $email = $_POST['email'];
-    $telefon = $_POST['telefon'];
-    $adress = $_POST['adress'];
-    $postnummer = $_POST['postnummer'];
-    $ort = $_POST['ort'];
-
     try {
-
         $sql = "UPDATE `försäljare` SET 
                 fornamn = :fornamn, 
                 efternamn = :efternamn, 
@@ -240,49 +224,115 @@ if (isset($_POST['submit_edit'])) {
                 WHERE forsaljar_id = :id";
 
         $stmt = $pdo->prepare($sql);
-        
-        $stmt->execute([
-            ':fornamn'    => $fornamn,
-            ':efternamn'   => $efternamn,
-            ':email'       => $email,
-            ':telefon'     => $telefon,
-            ':adress'      => $adress,
-            ':postnummer'  => $postnummer,
-            ':ort'         => $ort,
-            ':id'          => $id
+        return $stmt->execute([
+            ':fornamn'    => $data['fornamn'],
+            ':efternamn'  => $data['efternamn'],
+            ':email'      => $data['email'],
+            ':telefon'    => $data['telefon'],
+            ':adress'     => $data['adress'],
+            ':postnummer' => $data['postnummer'],
+            ':ort'        => $data['ort'],
+            ':id'         => $data['id']
         ]);
-
-        header("Location: sellersoverview.php?success=1");
-        exit();
-
     } catch (PDOException $e) {
         die("Database Error: " . $e->getMessage());
     }
 }
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_delete'])) {
-    global $pdo; 
-
-    if (!$pdo) {
-        die("Database error: The variable \$pdo is null. Check your database include file.");
-    }
-
-    $idToDelete = $_POST['delete_id'];
-
+function deleteSeller($pdo, $id) {
     try {
         $stmt = $pdo->prepare("DELETE FROM försäljare WHERE forsaljar_id = :id");
-        $stmt->bindParam(':id', $idToDelete, PDO::PARAM_INT);
-
-        if ($stmt->execute()) {
-            header("Location: " . $_SERVER['PHP_SELF']); 
-            exit;
-        }
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     } catch (PDOException $e) {
         echo "<div class='alert alert-danger'>Database Error: " . $e->getMessage() . "</div>";
+        return false;
     }
 }
 
+function searchCarsDB($pdo, $searchParam){
+    $sql = "SELECT * FROM bilar
+            JOIN bransletyp ON bilar.bransletyp = bransletyp.bransletyp_id
+            WHERE marke LIKE :search
+               OR modell LIKE :search2";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(":search", "%$searchParam%", PDO::PARAM_STR);
+    $stmt->bindValue(":search2", "%$searchParam%", PDO::PARAM_STR);
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+}
+
+function updateCar($pdo, $data) {
+    $sql = "UPDATE bilar SET 
+            marke = :marke,
+            modell = :modell,
+            arsmodell = :arsmodell,
+            farg = :farg,
+            bransletyp = :bransletyp,
+            ar_automat = :ar_automat
+            WHERE bil_id = :id";
+
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([
+        ':marke'      => $data['marke'],
+        ':modell'     => $data['modell'],
+        ':arsmodell'  => $data['arsmodell'],
+        ':farg'       => $data['farg'],
+        ':bransletyp' => $data['bransletyp'],
+        ':ar_automat' => $data['ar_automat'],
+        ':id'         => $data['id']
+    ]);
+}
+
+function deleteCar($pdo, $id) {
+    $stmt = $pdo->prepare("DELETE FROM bilar WHERE bil_id = :id");
+    return $stmt->execute([':id' => $id]);
+}
+
+function searchListing($pdo, $searchParam){
+    $sql = "SELECT * FROM annonser  JOIN försäljare ON annonser.forsaljare_id = försäljare.forsaljar_id
+    WHERE publiceringsdatum LIKE :search1 OR forsaljar_id LIKE :search2";
+	$listingSearch = $pdo->prepare($sql);
+	$listingSearch->bindValue(":search1", "%$searchParam%", PDO::PARAM_STR);
+	$listingSearch->bindValue(":search2", "%$searchParam%", PDO::PARAM_STR);
+	$listingSearch->execute();
+
+	return $listingSearch->fetchAll();
+}
+
+function updateListing($pdo, $data) {
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    try {
+        $sql = "UPDATE `annonser` SET 
+                pris = :pris, 
+                beskrivning = :beskrivning, 
+                ar_aktiv = :ar_aktiv
+                WHERE annons_id = :id";
+
+        $stmt = $pdo->prepare($sql);
+        return $stmt->execute([
+            ':pris'    => $data['pris'],
+            ':beskrivning'  => $data['beskrivning'],
+            ':ar_aktiv'     => $data['ar_aktiv'],
+            ':id'         => $data['id']
+        ]);
+    } catch (PDOException $e) {
+        die("Database Error: " . $e->getMessage());
+    }
+}
+
+function deleteListing($pdo, $id) {
+    try {
+        $stmt = $pdo->prepare("DELETE FROM annonser WHERE annons_id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        echo "<div class='alert alert-danger'>Database Error: " . $e->getMessage() . "</div>";
+        return false;
+    }
+}
 
 function getCarById($pdo, $id) {
     $stmt = $pdo->prepare("SELECT * FROM annonser
